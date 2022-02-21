@@ -1,21 +1,25 @@
 import GlobalStyles from 'components/globalStyles';
 import { darkTheme, lightTheme } from 'components/themes';
-import Movies from 'pages/Movies';
-import { useState } from 'react';
-import { ThemeProvider } from 'styled-components';
+import Menu from "pages/Menu";
+import { useState } from "react";
+import styled, { ThemeProvider } from "styled-components";
 
 function App() {
-  const [theme, setTheme] = useState('dark');
+  const [theme, setTheme] = useState("dark");
 
   const toggleTheme = (theme: string) => () => {
-    theme === 'light' ? setTheme('dark') : setTheme('light');
-  }
+    theme === "light" ? setTheme("dark") : setTheme("light");
+  };
+
+  const Button = styled.button`
+    margin-bottom: 30px;
+  `;
 
   return (
-    <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+    <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
       <GlobalStyles />
-      <button onClick={toggleTheme(theme)}>switch theme</button>
-      <Movies />
+      <Button onClick={toggleTheme(theme)}>switch theme</Button>
+      <Menu />
     </ThemeProvider>
   );
 }

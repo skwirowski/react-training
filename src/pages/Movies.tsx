@@ -4,25 +4,18 @@ import Movie from 'interfaces/Movie';
 import { useEffect, useState } from 'react';
 
 export default function Movies() {
-  // state z movies ktory sie wyswietla w return
-  // na wejsciu pobrac filmy z api
-  // interface do use state
-  // Movie card:
-  // image
-  // title
-  // description
   const [count, setCount] = useState(0);
   const [movies, isLoading] = useFetchMovies<Movie>();
 
   useEffect(() => {
     const counterInterval = setInterval(() => {
-      setCount(prevCount => prevCount + 1);
-    }, 1000)
+      setCount((prevCount) => prevCount + 1);
+    }, 1000);
 
     return () => {
-      clearInterval(counterInterval)
-    }
-  }, [])
+      clearInterval(counterInterval);
+    };
+  }, []);
 
   return (
     <div>
