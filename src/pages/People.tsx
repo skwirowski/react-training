@@ -1,38 +1,21 @@
+import Loader from "components/Loader";
 import PersonCard from "components/PersonCard";
+import useFetchPeople from "hooks/useFetchPeople";
 import Person from "interfaces/Person";
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
-const Loader = styled.span`
-  display: block;
-  text-align: center;
-  margin: 30px;
+const Wrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export default function People() {
-  const [people, setPeople] = useState<Person[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [isLoading, setLoading] = useState<boolean>(false);
+  const [people, isLoading] = useFetchPeople<Person>(currentPage);
   const lastCardRef = useRef<Element>(null);
-
-  useEffect(() => {
-    setLoading(true);
-    let shouldCancel = false;
-    setTimeout(() => {
-      fetch(`https://randomuser.me/api/?page=${currentPage}&results=10`)
-        .then((response) => response.json())
-        .then((data) => {
-          !shouldCancel &&
-            setPeople((prevState) => [...prevState, ...data.results]);
-        })
-        .catch((error) => console.log(error))
-        .finally(() => setLoading(false));
-    }, 2000);
-
-    return () => {
-      shouldCancel = true;
-    };
-  }, [currentPage]);
 
   useEffect(() => {
     // intersection observer
@@ -56,18 +39,19 @@ export default function People() {
         people?.map((person, index) => {
           if (index === people.length - 1) {
             return (
-              <PersonCard key={person.email} ref={lastCardRef}>
-                {person.name.first} {person.name.last}
-              </PersonCard>
+              <PersonCard key={person.email} data={person} ref={lastCardRef} />
             );
           }
-          return (
-            <PersonCard key={person.email}>
-              {person.name.first} {person.name.last}
-            </PersonCard>
-          );
+          return <PersonCard key={person.email} data={person} />;
         })}
-      <Loader>Loading ...</Loader>
+
+      {!isLoading && people?.length === 0 && <div>There&apos;s no data.</div>}
+
+      {isLoading && (
+        <Wrapper>
+          <Loader />
+        </Wrapper>
+      )}
     </div>
   );
 }

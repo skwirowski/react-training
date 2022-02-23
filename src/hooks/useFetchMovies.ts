@@ -10,33 +10,33 @@ export default function useFetchMovies<T>(): [movies: null | T[], isLoading: boo
 
     // cancel request in open fetch function for unmounted components
     // react query, apollo client
-
-    fetch('https://ghibliapi.herokuapp.com/films')
-    .then(response => response.json())
-    .then(data => !shouldCancel && setMovies(data))
-    .catch(error => console.log(error))
-    .finally(() => setLoading(false))
-
+    setTimeout(() => {
+      fetch("https://ghibliapi.herokuapp.com/films")
+        .then((response) => response.json())
+        .then((data) => !shouldCancel && setMovies(data))
+        .catch((error) => console.log(error))
+        .finally(() => setLoading(false));
+    }, 1000);
     return () => {
       shouldCancel = true;
-    }
-  }, [])
+    };
+  }, []);
 
   // useEffect(() => {
   //  const fetchData = async () => {
   //    try {
-        // setLoading(true)
+  // setLoading(true)
   //   const data = await fetch('https://ghibliapi.herokuapp.com/films');
   // } catch (error) {
   //   console.log(error);
 
   // } finally {
-      // setLoading(false)
+  // setLoading(false)
   // }
   //  }
 
   //  fetchData();
   // }, [])
 
-  return [ movies, isLoading ]
+  return [movies, isLoading];
 }

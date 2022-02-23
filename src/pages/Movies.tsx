@@ -1,7 +1,17 @@
-import MovieCard from 'components/MovieCard';
-import useFetchMovies from 'hooks/useFetchMovies';
-import Movie from 'interfaces/Movie';
-import { useEffect, useState } from 'react';
+import Loader from "components/Loader";
+import MovieCard from "components/MovieCard";
+import useFetchMovies from "hooks/useFetchMovies";
+import Movie from "interfaces/Movie";
+import { useEffect, useState } from "react";
+import styled from "styled-components";
+
+const Wrapper = styled.div`
+  width: 100%;
+  height: 50vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 export default function Movies() {
   const [count, setCount] = useState(0);
@@ -20,7 +30,11 @@ export default function Movies() {
   return (
     <div>
       {count}
-      {isLoading && <div>Loading ...</div>}
+      {isLoading && (
+        <Wrapper>
+          <Loader />
+        </Wrapper>
+      )}
       {movies?.map((movie) => (
         <MovieCard key={movie.id} data={movie} isCentered={true} />
       ))}

@@ -1,12 +1,14 @@
 import Default from "pages/Default";
 import Movies from "pages/Movies";
 import People from "pages/People";
+import Video from "pages/Video";
 import { useState } from "react";
 import styled from "styled-components";
 
 type Pages = {
   movies: string;
   people: string;
+  video: string;
   default: string;
 };
 
@@ -19,6 +21,7 @@ export default function Menu() {
   const pages: Pages = {
     movies: "movies",
     people: "people",
+    video: "video",
     default: "default",
   };
 
@@ -32,6 +35,8 @@ export default function Menu() {
         return <Movies />;
       case "people":
         return <People />;
+      case "video":
+        return <Video />;
       default:
         return <Default isCentered={true} />;
     }
@@ -42,6 +47,7 @@ export default function Menu() {
       <Wrapper>
         <button onClick={handleClick("movies")}>Movies</button>
         <button onClick={handleClick("people")}>People</button>
+        <button onClick={handleClick("video")}>Video</button>
       </Wrapper>
       {displayPage(currentPage)}
     </div>
