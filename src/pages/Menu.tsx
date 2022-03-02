@@ -1,55 +1,40 @@
-import Default from "pages/Default";
-import Movies from "pages/Movies";
-import People from "pages/People";
-import Video from "pages/Video";
-import { useState } from "react";
+import routes from "config/routes";
+import { Link, Outlet } from "react-router-dom";
 import styled from "styled-components";
-
-type Pages = {
-  movies: string;
-  people: string;
-  video: string;
-  default: string;
-};
 
 const Wrapper = styled.div`
   margin-bottom: 30px;
 `;
 
+const Button = styled.button`
+  padding: 0;
+`;
+
+const StyledLink = styled(Link)`
+  display: block;
+  text-decoration: none;
+  color: #000;
+  padding: 1px 6px;
+`;
+
 export default function Menu() {
-  const [currentPage, setCurrentPage] = useState("default");
-  const pages: Pages = {
-    movies: "movies",
-    people: "people",
-    video: "video",
-    default: "default",
-  };
-
-  const handleClick = (page: keyof Pages) => () => {
-    setCurrentPage(pages[page]);
-  };
-
-  const displayPage = (page: string) => {
-    switch (page) {
-      case "movies":
-        return <Movies />;
-      case "people":
-        return <People />;
-      case "video":
-        return <Video />;
-      default:
-        return <Default isCentered={true} />;
-    }
-  };
-
   return (
     <div>
       <Wrapper>
-        <button onClick={handleClick("movies")}>Movies</button>
-        <button onClick={handleClick("people")}>People</button>
-        <button onClick={handleClick("video")}>Video</button>
+        <Button>
+          <StyledLink to={routes.home}>Home</StyledLink>
+        </Button>
+        <Button>
+          <StyledLink to={routes.movies}>Movies</StyledLink>
+        </Button>
+        <Button>
+          <StyledLink to={routes.people}>People</StyledLink>
+        </Button>
+        <Button>
+          <StyledLink to={routes.video}>Video</StyledLink>
+        </Button>
       </Wrapper>
-      {displayPage(currentPage)}
+      <Outlet />
     </div>
   );
 }

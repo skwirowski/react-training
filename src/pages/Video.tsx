@@ -48,6 +48,7 @@ export default function Video() {
   // szybkość odtwarzania
   // wyświetlanie wideo na dole po lewej po przeskrolowaniu
   // obliczanie timestampu na którym aktualnie jest wideo
+  // doładowywanie danych z dołu do góry
 
   const [showControls, setShowControls] = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
